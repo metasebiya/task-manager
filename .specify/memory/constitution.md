@@ -1,50 +1,40 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Spec-Driven Task Manager Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Spec-Driven Development (SDD)
+The API/Model specification is the single source of truth.
+- **Rule**: Create `src/specs/schema.ts` using Zod before writing any implementation code.
+- **Rule**: All implementation types must be inferred from the Zod schema.
+- **Rule**: UI and Database are implementation details; the Spec is the Contract.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Clean Architecture
+Strict separation of concerns is enforced.
+- **/types**: Specifications and Zod schemas.
+- **/services**: Business logic and data fetching.
+- **/components**: Atomic UI components.
+- **/app/api**: Clean controllers that call services.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+## Technology Stack
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### Frontend & State
+- **Framework**: Next.js 14+ (App Router)
+- **Styling**: Tailwind CSS, Lucide React (Modern, minimalist dark/light mode)
+- **State Management**: TanStack Query (Server state), React Context (Client state if needed)
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### Backend & Validation
+- **API**: Next.js Route Handlers
+- **Validation**: Zod (Runtime), TypeScript (Build-time)
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Development Workflow
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+1. **Define the Spec**: Update `src/specs/schema.ts`.
+2. **API Design**: Implement Route Handlers with mocked latency (500ms).
+3. **Service Layer**: Implement logical services to handle data fetching/mutation.
+4. **UI Implementation**: Build components and pages using the services.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Code Quality Standards
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
-
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
-
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+- **Strict Typing**: `no any` usage. Types inferred from Spec.
+- **Error Handling**: Functional error handling (return data/error objects).
+- **Git Workflow**: Descriptive commits for each logical block.
